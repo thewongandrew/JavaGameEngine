@@ -10,4 +10,8 @@ public class Vertex extends Vertex3D {
 	public Vertex(Point3D point3d) {
 		super(point3d);
 	}
+	
+	public Vertex() {
+		super();
+	}
 }

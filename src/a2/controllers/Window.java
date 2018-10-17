@@ -1,10 +1,7 @@
 package a2.controllers;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-
 import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
 import com.jogamp.opengl.util.FPSAnimator;
 
@@ -15,22 +12,19 @@ public class Window extends JFrame {
 	
 	private Canvas canvas;
 	
-	private static final String TITLE = "CSC 155 - Assignment #1: Triangle Choke";
-	private static final int WIDTH = 1024;
-	private static final int HEIGHT = 576;
-	private static final int FPS_CAP = 60;
+	private static final String TITLE = "CSC 155 - Assignment #2: Intergalactic Planetary";
+	private static final int WIDTH = 1920;
+	private static final int HEIGHT = 1080;
+	private static final int FPS_CAP = 240;
 	
 	public Window() {
 		this.setTitle(TITLE);
 		this.setSize(WIDTH, HEIGHT);
+		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
 		canvas = new Canvas();
 		canvas.addGLEventListener(canvas);
 		canvas.addMouseWheelListener(canvas);
-		
-		JPanel bottomPanel = new JPanel();
-		bottomPanel.setBackground(Color.BLACK);
-		this.add(bottomPanel, BorderLayout.SOUTH);
 		
 		getContentPane().add(canvas);
 		setVisible(true);

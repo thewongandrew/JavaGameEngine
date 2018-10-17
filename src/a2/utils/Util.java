@@ -1,6 +1,7 @@
 package a2.utils;
 
 import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 
 import com.jogamp.common.nio.Buffers;
 
@@ -19,5 +20,14 @@ public class Util {
 		vertBuf.flip();
 		
 		return vertBuf;
+	}
+
+	public static IntBuffer createIntegerBuffer(int[] indices) {
+		IntBuffer intBuf = Buffers.newDirectIntBuffer(indices.length);
+		
+		intBuf.put(indices);
+		intBuf.flip();
+		
+		return intBuf;
 	}
 }

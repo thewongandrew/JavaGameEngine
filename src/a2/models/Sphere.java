@@ -1,55 +1,53 @@
 package a2.models;
 
-import graphicslib3D.*;
+import a2.utils.Mesh;
+import a2.utils.Vertex;
+import graphicslib3D.Point3D;
+import graphicslib3D.Vector3D;
+
 import static java.lang.Math.*;
 
-public class Sphere
-{
-	private int numVertices, numIndices, prec=48;
-	private int[] indices;
-	private Vertex3D[] vertices;
+public class Sphere extends Mesh {
+	private int prec=48;
 	
-	public Sphere(int p)
-	{	prec = p;
+	public Sphere(int p) {	
+		prec = p;
 		InitSphere();
 	}
 	
-	private void InitSphere()
-	{	numVertices = (prec+1) * (prec+1);
-		numIndices = prec * prec * 6;
-		vertices = new Vertex3D[numVertices];
-		indices = new int[numIndices];
+	private void InitSphere() {	
+		int numVertices = (prec+1) * (prec+1);
+		int numIndices = prec * prec * 6;
+		Vertex[] vertices = new Vertex[numVertices];
+		int[] indices = new int[numIndices];
 
-		for (int i=0; i<numVertices; i++) { vertices[i] = new Vertex3D(); }
+		for (int i=0; i<numVertices; i++) { vertices[i] = new Vertex(); }
 
 		// calculate triangle vertices
-		for (int i=0; i<=prec; i++)
-		{	for (int j=0; j<=prec; j++)
-			{	float y = (float)cos(toRadians(180-i*180/prec));
+		for (int i=0; i<=prec; i++)	{	
+			for (int j=0; j<=prec; j++)	{	
+				float y = (float)cos(toRadians(180-i*180/prec));
 				float x = -(float)cos(toRadians(j*360.0/prec))*(float)abs(cos(asin(y)));
 				float z = (float)sin(toRadians(j*360.0f/(float)(prec)))*(float)abs(cos(asin(y)));
 				vertices[i*(prec+1)+j].setLocation(new Point3D(x,y,z));
 				vertices[i*(prec+1)+j].setS((float)j/prec);
 				vertices[i*(prec+1)+j].setT((float)i/prec);
 				vertices[i*(prec+1)+j].setNormal(new Vector3D(vertices[i*(prec+1)+j].getLocation()));
-		}	}
+			}	
+		}
 		
 		// calculate triangle indices
-		for(int i=0; i<prec; i++)
-		{	for(int j=0; j<prec; j++)
-			{	indices[6*(i*prec+j)+0] = i*(prec+1)+j;
+		for(int i=0; i<prec; i++) {	
+			for(int j=0; j<prec; j++) {	
+				indices[6*(i*prec+j)+0] = i*(prec+1)+j;
 				indices[6*(i*prec+j)+1] = i*(prec+1)+j+1;
 				indices[6*(i*prec+j)+2] = (i+1)*(prec+1)+j;
 				indices[6*(i*prec+j)+3] = i*(prec+1)+j+1;
 				indices[6*(i*prec+j)+4] = (i+1)*(prec+1)+j+1;
 				indices[6*(i*prec+j)+5] = (i+1)*(prec+1)+j;
-	}	}	}
-
-	public int[] getIndices()
-	{	return indices;
-	}
-
-	public Vertex3D[] getVertices()
-	{	return vertices;
+			}	
+		}	
+		
+		this.setVertices(vertices, indices);
 	}
 }

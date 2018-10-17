@@ -36,7 +36,7 @@ public class ShaderProgram {
 		this.gl.glUseProgram(this.program);
 	}
 	
-	// Add a uniform to be use to the HashMap
+	// Add a uniform to be used to the HashMap
 	public void useUniform(String uniform) {
 		int loc = this.gl.glGetUniformLocation(this.program, uniform);
 		
@@ -48,6 +48,7 @@ public class ShaderProgram {
 		uniforms.put(uniform, loc);
 	}
 	
+	// Wrappers around gl to set uniform variables by name
 	public void setFloatUniform(String uniform, Float f) {
 		this.gl.glProgramUniform1f(this.program, this.uniforms.get(uniform), f);
 	}
@@ -56,13 +57,8 @@ public class ShaderProgram {
 		this.gl.glProgramUniform1i(this.program, this.uniforms.get(uniform), i);
 	}
 	
-	public void setMatrix4(String uniform, int count, boolean transpose, float[] value, int value_offset) {
-		this.gl.glProgramUniformMatrix3fv(this.program, 
-										  this.uniforms.get(uniform), 
-										  count, 
-										  transpose, 
-										  value, 
-										  value_offset);
+	public void setMatrixUniform(String uniform, Matrix m) {
+		this.gl.glUniformMatrix4fv(this.uniforms.get(uniform), 1, true, m.getFloatValues(), 0);
 	}
 	
 	public void addVertexShader(String source) {
