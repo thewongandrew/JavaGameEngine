@@ -1,4 +1,4 @@
-package a2.utils;
+package a2.models;
 
 import static com.jogamp.opengl.GL4.GL_ARRAY_BUFFER;
 import static com.jogamp.opengl.GL4.GL_ELEMENT_ARRAY_BUFFER;
@@ -13,6 +13,9 @@ import java.nio.IntBuffer;
 import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.GLContext;
 
+import a2.utils.Util;
+import a2.utils.Vertex;
+
 public class Mesh {
 
 	private int vbos[] = new int[3];
@@ -22,8 +25,8 @@ public class Mesh {
 	
 	public Mesh() {
 		gl = (GL4) GLContext.getCurrentGL();
-		gl.glGenBuffers(vbos.length, vbos, 0);
-		gl.glGenBuffers(ibos.length, ibos, 0);
+		gl.glGenBuffers(1, vbos, 0);
+		gl.glGenBuffers(1, ibos, 0);
 		size = 0;
 	}
 	

@@ -21,6 +21,16 @@ public class Util {
 		
 		return vertBuf;
 	}
+	
+	public static FloatBuffer createFloatBuffer(Matrix matrix) {
+		// Initialize FloatBuffer with size based on number of elements(total points)
+		FloatBuffer floatBuf = Buffers.newDirectFloatBuffer(4*4);
+		
+		floatBuf.put(matrix.getFloatValues());
+		floatBuf.flip();
+		
+		return floatBuf;
+	}
 
 	public static IntBuffer createIntegerBuffer(int[] indices) {
 		IntBuffer intBuf = Buffers.newDirectIntBuffer(indices.length);

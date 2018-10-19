@@ -1,6 +1,6 @@
 package a2;
 
-import a2.controllers.Window;
+import a2.controller.Window;
 
 public class Starter {
 	

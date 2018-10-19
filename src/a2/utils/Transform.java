@@ -1,10 +1,9 @@
-package a2.models;
+package a2.utils;
 
-import a2.utils.Matrix;
 import graphicslib3D.Vector3D;
 
 public class Transform {
-	private static float fovy, width, height, near, far;
+	private static float fov, width, height, near, far;
 	private Vector3D scale;
 	private Vector3D rotation;
 	private Vector3D translation;
@@ -20,23 +19,24 @@ public class Transform {
 		Matrix rotationMatrix = new Matrix().initRotationMatrix(rotation);
 		Matrix translationMatrix = new Matrix().initTranslationMatrix(translation);
 		
-		Matrix transformationMatrix = new Matrix();
-		transformationMatrix.concatenate(translationMatrix);
-		transformationMatrix.concatenate(rotationMatrix);
-		transformationMatrix.concatenate(scaleMatrix);
-		
-		return transformationMatrix;
+		rotationMatrix.concatenate(scaleMatrix);
+		translationMatrix.concatenate(rotationMatrix);
+		return translationMatrix;
 	}
 	
 	public Matrix getProjectedTransformation() {
 		Matrix transformationMatrix = this.getTransformation();
-		Matrix projectionMatrix = new Matrix().initProjectionMatrix(fovy, width, height, near, far);
+		Matrix projectionMatrix = new Matrix().initProjectionMatrix(Transform.fov, 
+																	Transform.width, 
+																	Transform.height, 
+																	Transform.near, 
+																	Transform.far);
 		projectionMatrix.concatenate(transformationMatrix);
 		return projectionMatrix;
 	}
 	
-	public void setProjection(float fovy, float width, float height, float near, float far) {
-		Transform.fovy = fovy;
+	public static void setProjection(float fov, float width, float height, float near, float far) {
+		Transform.fov = fov;
 		Transform.width = width;
 		Transform.height = height;
 		Transform.near = near;

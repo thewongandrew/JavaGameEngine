@@ -58,7 +58,7 @@ public class ShaderProgram {
 	}
 	
 	public void setMatrixUniform(String uniform, Matrix m) {
-		this.gl.glUniformMatrix4fv(this.uniforms.get(uniform), 1, true, m.getFloatValues(), 0);
+		this.gl.glProgramUniformMatrix4fv(this.program, this.uniforms.get(uniform), 1, false, m.getFloatValues(), 0);
 	}
 	
 	public void addVertexShader(String source) {

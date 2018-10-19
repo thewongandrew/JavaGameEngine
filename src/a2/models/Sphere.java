@@ -1,11 +1,11 @@
 package a2.models;
 
-import a2.utils.Mesh;
-import a2.utils.Vertex;
 import graphicslib3D.Point3D;
 import graphicslib3D.Vector3D;
 
 import static java.lang.Math.*;
+
+import a2.utils.Vertex;
 
 public class Sphere extends Mesh {
 	private int prec=48;
