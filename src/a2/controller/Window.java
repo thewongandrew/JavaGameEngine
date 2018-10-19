@@ -13,8 +13,8 @@ public class Window extends JFrame {
 	private Canvas canvas;
 	
 	private static final String TITLE = "CSC 155 - Assignment #2: Intergalactic Planetary";
-	private static final int WIDTH = 1098;
-	private static final int HEIGHT = 1127;
+	private static final int WIDTH = 1096;
+	private static final int HEIGHT = 1119;
 	private static final int FPS_CAP = 240;
 	
 	public Window() {

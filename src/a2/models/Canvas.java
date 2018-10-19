@@ -7,11 +7,12 @@ import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.awt.GLCanvas;
+import com.jogamp.opengl.util.texture.Texture;
 
+import a2.utils.RenderUtils;
 import a2.utils.ShaderProgram;
 import a2.utils.Transform;
-import a2.utils.Vertex;
-import graphicslib3D.Point3D;
+import a2.utils.Util;
 
 /*
  * GLCanvas object that handles the render logic
@@ -24,45 +25,38 @@ public class Canvas extends GLCanvas implements GLEventListener, MouseWheelListe
 	// One vertex array index for a single object
 	private int vao[] = new int[1];
 	
-	private Mesh myMesh;
 	private Sphere mySphere;
 	private float temp = 0.0f;
 	private Transform transform;
+	private int handsomeTexture;
+	private Texture joglHandsomeTexture;
 	
 	public void display(GLAutoDrawable drawable) {
 		GL4 gl = drawable.getGL().getGL4();
+		RenderUtils.clearScreen();
 		
-		// Clear, Update, Draw loop
-		gl.glClear(GL4.GL_DEPTH_BUFFER_BIT);
-		gl.glClear(GL4.GL_COLOR_BUFFER_BIT);
-		gl.glEnable(GL4.GL_CULL_FACE);
-		gl.glFrontFace(GL4.GL_CCW);
-	
-		temp += 0.03f;
+		temp += 0.02f;
 		float sinTemp = (float)Math.sin(temp);
-//		transform.setTranslation(3*(float)Math.cos(temp), 3*sinTemp, -10);
-		transform.setTranslation((float)Math.sin(temp) * 2.0f * (float)Math.sinh(1.0f), 
-								  0.0f, 
-								  (float)Math.cos(temp+10f) * 2.0f * (float)Math.cosh(1.0f)*3-10.0f);
-		transform.setRotation(sinTemp*180, sinTemp*180, sinTemp*180);
+		transform.setTranslation(3*(float)Math.cos(temp), 3*sinTemp, -10);
+		transform.setRotation(0, temp*100, 0);
 		
 		
 		this.rendering_program.bind();
 		this.rendering_program.setMatrixUniform("transform", transform.getProjectedTransformation());
+		
+		gl.glActiveTexture(GL4.GL_TEXTURE0);
+		gl.glBindTexture(GL4.GL_TEXTURE_2D, handsomeTexture);
 
-//		myMesh.draw();
 		mySphere.draw();
 	}
 
 	public void init(GLAutoDrawable drawable) {
 		GL4 gl = drawable.getGL().getGL4();
+		RenderUtils.initGLSettings();
 		
 		// Initialize the projection values
 		Transform.setProjection(60.0f, this.getWidth(), this.getHeight(), 0.1f, 1000.0f);
-		
-		// Set color for screen to be cleared to
-		gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-		
+				
 		// Print out version data as per assignment instructions
 		System.out.println("OpenGL Version: " + gl.glGetString(GL4.GL_VERSION));
         System.out.println("JOGL Version: " + Package.getPackage("com.jogamp.opengl").getImplementationVersion());
@@ -75,40 +69,8 @@ public class Canvas extends GLCanvas implements GLEventListener, MouseWheelListe
 		this.rendering_program.addFragmentShader("src/a2/resources/shaders/fragment.frag");
 		this.rendering_program.useUniform("transform");
 		
-		myMesh = new Mesh();
-		
-		Vertex[] vertices = new Vertex[] { new Vertex( new Point3D(-0.5f, -0.5f, -0.5f)),
-									       new Vertex( new Point3D(-0.5f,  0.5f, -0.5f)),
-									       new Vertex( new Point3D( 0.5f,  0.5f, -0.5f)),
-									       new Vertex( new Point3D( 0.5f, -0.5f, -0.5f)),
-									       new Vertex( new Point3D(-0.5f, -0.5f,  0.5f)),
-									       new Vertex( new Point3D(-0.5f,  0.5f,  0.5f)),
-									       new Vertex( new Point3D( 0.5f,  0.5f,  0.5f)),
-									       new Vertex( new Point3D( 0.5f, -0.5f,  0.5f))};
-		
-		int[] indices = new int[] {
-									// Front face
-							        0,1,2,
-							        0,2,3,
-							        // Back face
-							        4,6,5,
-							        4,7,6,
-							        // Left face
-							        4,5,1,
-							        4,1,0,
-							        // Right face
-							        3,2,6,
-							        3,6,7,
-							        // Top face
-							        1,5,6,
-							        1,6,2,
-							        // Bottom face
-							        4,0,3,
-							        4,3,7,
-								   };
- 		
-		myMesh.setVertices(vertices, indices);
-		
+		joglHandsomeTexture = Util.loadTexture("src/a2/resources/textures/HandsomeSquidward.png");
+		handsomeTexture = joglHandsomeTexture.getTextureObject();
 		
 		mySphere = new Sphere(100);
 		transform = new Transform();

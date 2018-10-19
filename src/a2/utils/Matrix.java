@@ -31,7 +31,6 @@ public class Matrix extends Matrix3D {
 		double rx = rotation.getX();
 		double ry = rotation.getY();
 		double rz = rotation.getZ();
-		
 		this.rotate(rx, ry, rz);
 		return this;
 	}

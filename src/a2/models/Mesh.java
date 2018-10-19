@@ -44,13 +44,16 @@ public class Mesh {
 	
 	public void draw() {		
 		gl.glEnableVertexAttribArray(0);
+		gl.glEnableVertexAttribArray(1);
 		
 		gl.glBindBuffer(GL_ARRAY_BUFFER, vbos[0]);
 		gl.glVertexAttribPointer(0, 3, GL_FLOAT, false, Vertex.SIZE*4, 0);
+		gl.glVertexAttribPointer(1, 2, GL_FLOAT, false, Vertex.SIZE*4, 12);
 
 		gl.glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibos[0]);
 		gl.glDrawElements(GL_TRIANGLES, this.size, GL_UNSIGNED_INT, 0);
 		
 		gl.glDisableVertexAttribArray(0);
+		gl.glDisableVertexAttribArray(1);
 	}
 }

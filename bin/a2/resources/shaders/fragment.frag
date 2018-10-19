@@ -1,9 +1,9 @@
 #version 430
 
-in vec4 varyingColor;
-
-out vec4 out_color;
+in vec2 tc;
+out vec4 color;
+layout (binding=0) uniform sampler2D samp;
 
 void main(void) {
-	out_color = varyingColor;
+	color = texture(samp, tc);
 }
