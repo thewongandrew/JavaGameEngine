@@ -1,6 +1,7 @@
 package a2.engine;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractAction;
 
@@ -19,6 +20,7 @@ public class Camera {
 		this.forward = new Vector3D(0, 0, 1);
 		// Default up is set to Y direction
 		this.up = new Vector3D(0, 1, 0);
+//		this.addInputs();
 	}
 	
 	public Camera(Vector3D position, Vector3D forward, Vector3D up) {
@@ -28,24 +30,33 @@ public class Camera {
 		
 		forward = new Vector3D(forward.normalize().getX(), forward.normalize().getY(), forward.normalize().getZ());
 		up = new Vector3D(up.normalize().getX(), up.normalize().getY(), up.normalize().getZ());
+//		this.addInputs();
 	}
 	
-	@SuppressWarnings({ "unused", "serial" })
+	private void addInputs() {
+		Input.addAction(KeyEvent.VK_W, new MoveForward());
+		Input.addAction(KeyEvent.VK_A, new MoveLeft());
+		Input.addAction(KeyEvent.VK_S, new MoveBackwards());
+		Input.addAction(KeyEvent.VK_D, new Moveright());
+	}
+	
+	@SuppressWarnings({ "serial" })
 	private class MoveForward extends AbstractAction {
 		@Override
 		public void actionPerformed(ActionEvent e) {Camera.this.move(Camera.this.getForward(), .01f);}
 	}
-	@SuppressWarnings({ "unused", "serial" })
-	private class MoveBackwards extends AbstractAction {
+	
+	@SuppressWarnings({ "serial" })
+	protected class MoveBackwards extends AbstractAction {
 		@Override
 		public void actionPerformed(ActionEvent e) {Camera.this.move(Camera.this.getForward(), -.01f);}
 	}
-	@SuppressWarnings({ "unused", "serial" })
+	@SuppressWarnings({ "serial" })
 	private class MoveLeft extends AbstractAction {
 		@Override
 		public void actionPerformed(ActionEvent e) {Camera.this.move(Camera.this.getLeft(), .01f);}
 	}
-	@SuppressWarnings({ "unused", "serial" })
+	@SuppressWarnings({ "serial" })
 	private class Moveright extends AbstractAction {
 		@Override
 		public void actionPerformed(ActionEvent e) {Camera.this.move(Camera.this.getRight(), .01f);}
