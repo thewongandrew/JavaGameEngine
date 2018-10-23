@@ -20,7 +20,7 @@ public class Camera {
 		this.forward = new Vector3D(0, 0, 1);
 		// Default up is set to Y direction
 		this.up = new Vector3D(0, 1, 0);
-//		this.addInputs();
+		this.addInputs();
 	}
 	
 	public Camera(Vector3D position, Vector3D forward, Vector3D up) {
@@ -30,7 +30,7 @@ public class Camera {
 		
 		forward = new Vector3D(forward.normalize().getX(), forward.normalize().getY(), forward.normalize().getZ());
 		up = new Vector3D(up.normalize().getX(), up.normalize().getY(), up.normalize().getZ());
-//		this.addInputs();
+		this.addInputs();
 	}
 	
 	private void addInputs() {
@@ -43,23 +43,31 @@ public class Camera {
 	@SuppressWarnings({ "serial" })
 	private class MoveForward extends AbstractAction {
 		@Override
-		public void actionPerformed(ActionEvent e) {Camera.this.move(Camera.this.getForward(), .01f);}
+		public void actionPerformed(ActionEvent e) {
+			Camera.this.move(Camera.this.getForward(), -.05f);
+		}
 	}
 	
 	@SuppressWarnings({ "serial" })
 	protected class MoveBackwards extends AbstractAction {
 		@Override
-		public void actionPerformed(ActionEvent e) {Camera.this.move(Camera.this.getForward(), -.01f);}
+		public void actionPerformed(ActionEvent e) {
+			Camera.this.move(Camera.this.getForward(), .05f);
+		}
 	}
 	@SuppressWarnings({ "serial" })
 	private class MoveLeft extends AbstractAction {
 		@Override
-		public void actionPerformed(ActionEvent e) {Camera.this.move(Camera.this.getLeft(), .01f);}
+		public void actionPerformed(ActionEvent e) {
+			Camera.this.move(Camera.this.getLeft(), .05f);
+		}
 	}
 	@SuppressWarnings({ "serial" })
 	private class Moveright extends AbstractAction {
 		@Override
-		public void actionPerformed(ActionEvent e) {Camera.this.move(Camera.this.getRight(), .01f);}
+		public void actionPerformed(ActionEvent e) {
+			Camera.this.move(Camera.this.getRight(), .05f);
+		}
 	}
 	
 	public void rotateX(float degrees) {
@@ -108,10 +116,16 @@ public class Camera {
 	}
 	
 	public Vector3D getLeft() {
-		return (Vector3D) this.forward.cross(this.up).normalize();
+		float x = (float) this.forward.cross(this.up).normalize().getX();
+		float y = (float) this.forward.cross(this.up).normalize().getY();
+		float z = (float) this.forward.cross(this.up).normalize().getZ();
+		return new Vector3D(x, y, z);
 	}
 	
 	public Vector3D getRight() {
-		return (Vector3D) this.up.cross(this.forward).normalize();
+		float x = (float) this.up.cross(this.forward).normalize().getX();
+		float y = (float) this.up.cross(this.forward).normalize().getY();
+		float z = (float) this.up.cross(this.forward).normalize().getZ();
+		return new Vector3D(x, y, z);
 	}	
 }

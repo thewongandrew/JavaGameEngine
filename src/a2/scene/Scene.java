@@ -1,5 +1,7 @@
 package a2.scene;
 
+import java.awt.BorderLayout;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
@@ -26,18 +28,16 @@ public class Scene extends JFrame {
 		this.setSize(WIDTH, HEIGHT);
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
-		mainPanel = new JPanel();		
-		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(mainPanel);
-		mainPanel.setLayout(layout);
+		mainPanel = new JPanel(new BorderLayout());
         
 		canvas = new Canvas();
 		canvas.addGLEventListener(canvas);
 		canvas.addMouseWheelListener(canvas);
 		
-//		input = new Input(this.getContentPane().get);
+		input = new Input(mainPanel);
 		
 		mainPanel.add(canvas);
-		this.add(canvas);
+		this.add(mainPanel);
 		setVisible(true);
 		FPSAnimator animator = new FPSAnimator(canvas, FPS_CAP);
 		animator.start();

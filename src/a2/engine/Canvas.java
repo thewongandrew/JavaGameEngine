@@ -39,10 +39,11 @@ public class Canvas extends GLCanvas implements GLEventListener, MouseWheelListe
 		RenderUtils.clearScreen();
 		
 		temp += 0.02f;
-		transform.setTranslation((float)(Math.sin(temp) * 2.0f * Math.sinh(1.0f)), 
-								 (float)(Math.cos(temp+10f) * 2.0f * Math.cosh(1.0f)), 
-								 -10.0f);
-		transform.setRotation(0, temp*100, 0);
+//		transform.setTranslation((float)(Math.sin(temp) * 2.0f * Math.sinh(1.0f)), 
+//								 (float)(Math.cos(temp+10f) * 2.0f * Math.cosh(1.0f)), 
+//								 -10.0f);
+		transform.setTranslation(0,0,-10);
+		transform.setRotation(0, temp*75, 0);
 		
 		
 		this.rendering_program.bind();
