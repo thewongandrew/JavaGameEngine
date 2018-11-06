@@ -35,7 +35,7 @@ public class Transform {
 																	Transform.height, 
 																	Transform.near, 
 																	Transform.far);
-		Matrix cameraRotationMatrix = new Matrix().initCameraMartix(camera.getForward(), camera.getUp());
+		Matrix cameraRotationMatrix = new Matrix().initCameraMatrix(camera.getForward(), camera.getUp());
 		Matrix cameraTranslationMatrix = new Matrix().initTranslationMatrix(camera.getPosition().mult(-1));
 		
 		cameraTranslationMatrix.concatenate(transformationMatrix);

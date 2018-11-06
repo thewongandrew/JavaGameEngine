@@ -46,7 +46,7 @@ public class Matrix extends Matrix3D {
 		return this;
 	}
 	
-	public Matrix initCameraMartix(Vector3D forward, Vector3D up) {
+	public Matrix initCameraMatrix(Vector3D forward, Vector3D up) {
 		Vector3D f = forward.normalize();
 		Vector3D r = up.normalize();
 		

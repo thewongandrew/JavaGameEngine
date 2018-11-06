@@ -29,8 +29,8 @@ public class Vector3D extends graphicslib3D.Vector3D {
 		float cosHalfAngle = (float)Math.cos(Math.toRadians(degrees/2));
 		
 		float qX = (float)axis.getX() * sinHalfAngle;
-		float qY = (float)axis.getX() * sinHalfAngle;
-		float qZ = (float)axis.getX() * sinHalfAngle;
+		float qY = (float)axis.getY() * sinHalfAngle;
+		float qZ = (float)axis.getZ() * sinHalfAngle;
 		float qW = cosHalfAngle;
 		
 		Quaternion rotation = new Quaternion(qX, qY, qZ, qW);

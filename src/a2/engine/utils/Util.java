@@ -15,8 +15,13 @@ public class Util {
 	
 	public static Texture loadTexture(String textureFileName)	{	
 		Texture tex = null;
-		try { tex = TextureIO.newTexture(new File(textureFileName), false); }
-		catch (Exception e) { e.printStackTrace(); }
+		try {
+			tex = TextureIO.newTexture(new File(textureFileName), false);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
 		return tex;
 	}
 	

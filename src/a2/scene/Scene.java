@@ -39,6 +39,7 @@ public class Scene extends JFrame {
 		mainPanel.add(canvas);
 		this.add(mainPanel);
 		setVisible(true);
+		this.requestFocus();
 		FPSAnimator animator = new FPSAnimator(canvas, FPS_CAP);
 		animator.start();
 	}

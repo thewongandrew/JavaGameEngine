@@ -37,55 +37,105 @@ public class Camera {
 		Input.addAction(KeyEvent.VK_W, new MoveForward());
 		Input.addAction(KeyEvent.VK_A, new MoveLeft());
 		Input.addAction(KeyEvent.VK_S, new MoveBackwards());
-		Input.addAction(KeyEvent.VK_D, new Moveright());
+		Input.addAction(KeyEvent.VK_D, new MoveRight());
+		Input.addAction(KeyEvent.VK_UP, new LookUp());
+		Input.addAction(KeyEvent.VK_DOWN, new LookDown());
+		Input.addAction(KeyEvent.VK_LEFT, new LookLeft());
+		Input.addAction(KeyEvent.VK_RIGHT, new LookRight());
 	}
 	
 	@SuppressWarnings({ "serial" })
 	private class MoveForward extends AbstractAction {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Camera.this.move(Camera.this.getForward(), -.05f);
+			move(getForward(), -.05f);
 		}
 	}
 	
 	@SuppressWarnings({ "serial" })
-	protected class MoveBackwards extends AbstractAction {
+	private class MoveBackwards extends AbstractAction {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Camera.this.move(Camera.this.getForward(), .05f);
+			move(getForward(), .05f);
 		}
 	}
+	
 	@SuppressWarnings({ "serial" })
 	private class MoveLeft extends AbstractAction {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Camera.this.move(Camera.this.getLeft(), .05f);
-		}
-	}
-	@SuppressWarnings({ "serial" })
-	private class Moveright extends AbstractAction {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Camera.this.move(Camera.this.getRight(), .05f);
+			move(getLeft(), .05f);
 		}
 	}
 	
+	@SuppressWarnings({ "serial" })
+	private class MoveRight extends AbstractAction {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			move(getRight(), .05f);
+		}
+	}
+	
+	@SuppressWarnings({ "serial" })
+	private class LookUp extends AbstractAction {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			rotateX(-.5f);
+		}
+	}
+	
+	@SuppressWarnings({ "serial" })
+	protected class LookDown extends AbstractAction {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			rotateX(.5f);
+		}
+	}
+	
+	@SuppressWarnings({ "serial" })
+	private class LookLeft extends AbstractAction {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			rotateY(-.5f);
+		}
+	}
+	
+	@SuppressWarnings({ "serial" })
+	private class LookRight extends AbstractAction {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			rotateY(.5f);
+		}
+	}
+	
+	
+	
 	public void rotateX(float degrees) {
-		Vector3D hAxis = (Vector3D) yAxis.cross(forward).normalize();
+		Vector3D hAxis = new Vector3D (yAxis.cross(forward).normalize().getX(),
+									   yAxis.cross(forward).normalize().getY(),
+									   yAxis.cross(forward).normalize().getZ());
 		
-		this.forward.rotate(hAxis, degrees);
-		this.forward.normalize();
+		this.forward = new Vector3D (this.forward.rotate(hAxis, degrees).normalize().getX(),
+									 this.forward.rotate(hAxis, degrees).normalize().getY(),
+									 this.forward.rotate(hAxis, degrees).normalize().getZ());
 		
-		this.up = (Vector3D) this.forward.cross(hAxis).normalize();
+		this.up = new Vector3D (this.forward.cross(hAxis).normalize().getX(),
+								this.forward.cross(hAxis).normalize().getY(),
+								this.forward.cross(hAxis).normalize().getZ());
 	}
 	
 	public void rotateY(float degrees) {
-		Vector3D hAxis = (Vector3D) yAxis.cross(forward).normalize();
+		Vector3D hAxis = new Vector3D (yAxis.cross(forward).normalize().getX(),
+				   					   yAxis.cross(forward).normalize().getY(),
+				   					   yAxis.cross(forward).normalize().getZ());
 		
-		this.forward.rotate(yAxis, degrees);
-		this.forward.normalize();
+		this.forward = new Vector3D (this.forward.rotate(yAxis, degrees).normalize().getX(),
+				 					 this.forward.rotate(yAxis, degrees).normalize().getY(),
+				 					 this.forward.rotate(yAxis, degrees).normalize().getZ());
 		
-		this.up = (Vector3D) this.forward.cross(hAxis).normalize();
+		this.up = new Vector3D (this.forward.cross(hAxis).normalize().getX(),
+								this.forward.cross(hAxis).normalize().getY(),
+								this.forward.cross(hAxis).normalize().getZ());
 	}
 	
 	public void move(Vector3D direction, float amt) {

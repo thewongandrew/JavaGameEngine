@@ -13,12 +13,11 @@ import a2.engine.math.Matrix;
 import a2.engine.utils.GLErrorUtils;
 import graphicslib3D.GLSLUtils;
 
-public class ShaderProgram {
+public abstract class ShaderProgram {
 
 	private GL4 gl;
 	private int program;
-	
-	// Hold the uniforms in HashMap to be accessed by name 
+
 	private HashMap<String, Integer> uniforms;
 
 	public ShaderProgram() {
@@ -38,7 +37,7 @@ public class ShaderProgram {
 		this.gl.glUseProgram(this.program);
 	}
 	
-	// Add a uniform to be used to the HashMap
+	// Add a uniform to be used into the HashMap
 	public void useUniform(String uniform) {
 		int loc = this.gl.glGetUniformLocation(this.program, uniform);
 		
@@ -49,6 +48,8 @@ public class ShaderProgram {
 		
 		uniforms.put(uniform, loc);
 	}
+
+	public void updateUniforms(Matrix worldMatrix, Matrix projectedMatrix, Material material) { }
 	
 	// Wrappers around gl to set uniform variables by name
 	public void setFloatUniform(String uniform, Float f) {
