@@ -4,6 +4,9 @@
       <w>jogamp</w>
       <w>jogl</w>
       <w>opengl</w>
+      <w>phong</w>
+      <w>shaders</w>
+      <w>sinh</w>
       <w>squidward</w>
     </words>
   </dictionary>

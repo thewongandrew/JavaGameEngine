@@ -24,7 +24,7 @@ public abstract class ShaderProgram {
 	    gl = (GL4) GLContext.getCurrentGL();
 		this.program = gl.glCreateProgram();
 		
-		uniforms = new HashMap<String, Integer>();
+		uniforms = new HashMap<>();
 		
 		if(this.program == 0) {
 			System.err.println("Error creating shader in constuctor");
