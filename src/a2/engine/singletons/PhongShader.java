@@ -2,7 +2,10 @@ package a2.engine.singletons;
 
 import a2.engine.Material;
 import a2.engine.ShaderProgram;
+import a2.engine.lighting.AmbientLight;
 import a2.engine.math.Matrix;
+import a2.engine.math.Vector3D;
+import a2.engine.utils.RenderUtils;
 import com.jogamp.opengl.GLContext;
 
 /**
@@ -16,7 +19,7 @@ public final class PhongShader extends ShaderProgram {
         return INSTANCE;
     }
 
-//    private AmbientLight ambientLight = new AmbientLight();
+    private Vector3D ambientLight = new Vector3D(0.2f, 0.2f, 0.2f);
 
     private PhongShader() {
         super();
@@ -24,6 +27,8 @@ public final class PhongShader extends ShaderProgram {
         this.addVertexShader("src/a2/resources/shaders/phongVertex.vert");
         this.addFragmentShader("src/a2/resources/shaders/phongFragment.frag");
         this.useUniform("transform");
+        this.useUniform("baseColor");
+        this.useUniform("ambientLight");
     }
 
     @Override
@@ -31,7 +36,11 @@ public final class PhongShader extends ShaderProgram {
         this.bind();
         if(material.getTexture() != null){
             material.getTexture().bind(GLContext.getCurrentGL());
+        } else {
+            RenderUtils.unbindTextures();
         }
         this.setMatrixUniform("transform", projectedMatrix);
+        this.setVectorUniform("baseColor", material.getColor());
+        this.setVectorUniform("ambientLight", ambientLight);
     }
 }

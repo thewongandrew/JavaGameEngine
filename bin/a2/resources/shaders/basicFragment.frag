@@ -3,8 +3,8 @@
 layout (binding=0) uniform sampler2D samp;
 
 in vec2 outTextCoord;
-out vec4 color;
+out vec4 outColor;
 
 void main(void) {
-	color = texture(samp, outTextCoord);
+	outColor = texture(samp, outTextCoord);
 }

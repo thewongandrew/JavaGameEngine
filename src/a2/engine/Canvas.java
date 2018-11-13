@@ -5,7 +5,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
+import a2.engine.math.Vector3D;
 import a2.engine.singletons.BasicShader;
+import a2.engine.singletons.PhongShader;
 import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
@@ -30,6 +32,7 @@ public class Canvas extends GLCanvas implements GLEventListener, MouseWheelListe
 	private Material material;
     private Sphere mySphere;
     private Camera camera;
+    private String handsomeSquidward = "src/a2/resources/textures/HandsomeSquidward.png";
 
 	private Timer timer;
 	
@@ -48,15 +51,10 @@ public class Canvas extends GLCanvas implements GLEventListener, MouseWheelListe
 		
 		temp += 0.02f;
 
-/* TODO Ellipse math
-transform.setTranslation((float)(Math.sin(temp) * 2.0f * Math.sinh(1.0f)),
-(float)(Math.cos(temp+10f) * 2.0f * Math.cosh(1.0f)),
--10.0f);
-*/
         transform.setTranslation(0,0,-10);
 		transform.setRotation(0, temp*75, 0);
 		
-		basicShader.updateUniforms(transform.getTransformation(),
+		phongShader.updateUniforms(transform.getTransformation(),
                                    transform.getProjectedTransformation(),
                                    material);
 
@@ -75,15 +73,15 @@ transform.setTranslation((float)(Math.sin(temp) * 2.0f * Math.sinh(1.0f)),
         System.out.println("Aspect Ratio: " + getWidth() + "x" + getHeight());
 
         /* Initialize the shader programs to be used */
-		basicShader = BasicShader.getInstance();
-//        phongShader = PhongShader.getInstance();
+//		basicShader = BasicShader.getInstance();
+        phongShader = PhongShader.getInstance();
 
         /* Initialize the projection values */
 		camera = new Camera();
 		Transform.setCamera(camera);
 		Transform.setProjection(60.0f, getWidth(), getHeight(), 0.1f, 1000.0f);
 		
-		material = new Material(Util.loadTexture("src/a2/resources/textures/HandsomeSquidward.png"));
+		material = new Material(Util.loadTexture(handsomeSquidward), new Vector3D(0, 1, 1));
 
 		mySphere = new Sphere(100);
 		transform = new Transform();

@@ -5,6 +5,7 @@ import static com.jogamp.opengl.GL2ES2.GL_VERTEX_SHADER;
 
 import java.util.HashMap;
 
+import a2.engine.math.Vector3D;
 import com.jogamp.opengl.GL2ES2;
 import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.GLContext;
@@ -55,6 +56,10 @@ public abstract class ShaderProgram {
 	public void setFloatUniform(String uniform, Float f) {
 		this.gl.glProgramUniform1f(this.program, this.uniforms.get(uniform), f);
 	}
+
+	public void setVectorUniform(String uniform, Vector3D vector) {
+	    this.gl.glProgramUniform3fv(this.program, this.uniforms.get(uniform),1, vector.getLocationFloats(), 0);
+    }
 	
 	public void setIntegerUniform(String uniform, int i) {
 		this.gl.glProgramUniform1i(this.program, this.uniforms.get(uniform), i);

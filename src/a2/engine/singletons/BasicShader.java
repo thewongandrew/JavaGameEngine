@@ -3,6 +3,7 @@ package a2.engine.singletons;
 import a2.engine.Material;
 import a2.engine.ShaderProgram;
 import a2.engine.math.Matrix;
+import a2.engine.utils.RenderUtils;
 import com.jogamp.opengl.GLContext;
 
 /**
@@ -29,6 +30,8 @@ public final class BasicShader extends ShaderProgram {
         this.bind();
         if(material.getTexture() != null){
             material.getTexture().bind(GLContext.getCurrentGL());
+        } else {
+            RenderUtils.unbindTextures();
         }
         this.setMatrixUniform("transform", projectedMatrix);
     }

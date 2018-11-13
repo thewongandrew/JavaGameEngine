@@ -1,5 +1,6 @@
 package a2.engine.utils;
 
+import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.GLContext;
 
@@ -16,6 +17,11 @@ public class RenderUtils {
 			gl.glEnable(GL4.GL_TEXTURE_2D);
 		else 
 			gl.glDisable(GL4.GL_TEXTURE_2D);
+	}
+
+	public static void unbindTextures() {
+		GL4 gl = (GL4) GLContext.getCurrentGL();
+		gl.glBindTexture(GL.GL_TEXTURE_2D, 0);
 	}
 	
 	public static void initGLSettings() {
